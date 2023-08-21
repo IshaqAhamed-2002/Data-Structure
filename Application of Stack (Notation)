@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+#define MAX_SIZE 100
+
+int stack[MAX_SIZE];
+int top = -1;
+
+void push(int item) {
+    if (top >= MAX_SIZE - 1) {
+        printf("Stack overflow\n");
+        exit(1);
+    } else {
+        stack[++top] = item;
+    }
+}
+
+int pop() {
+    if (top < 0) {
+        printf("Stack underflow\n");
+        exit(1);
+    } else {
+        return stack[top--];
+    }
+}
+
+int evaluatePostfix(const char *expression) {
+    for (int i = 0; expression[i] != '\0'; i++) {
+        if (isdigit(expression[i])) {
+            push(expression[i] - '0'); // Convert char to int
+        } else if (expression[i] == '+' || expression[i] == '-' ||
+                   expression[i] == '*' || expression[i] == '/') {
+            int operand2 = pop();
+            int operand1 = pop();
+            int result;
+            
+            switch (expression[i]) {
+                case '+':
+                    result = operand1 + operand2;
+                    break;
+                case '-':
+                    result = operand1 - operand2;
+                    break;
+                case '*':
+                    result = operand1 * operand2;
+                    break;
+                case '/':
+                    result = operand1 / operand2;
+                    break;
+            }
+            
+            push(result);
+        }
+    }
+    
+    return pop(); // Final result
+}
+
+int main() {
+    const char *postfixExpression = "62+5*84/-";
+    int result = evaluatePostfix(postfixExpression);
+    printf("Result: %d\n", result);
+    
+    return 0;
+}
