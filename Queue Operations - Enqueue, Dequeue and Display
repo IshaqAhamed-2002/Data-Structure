@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 100
+
+int queue[MAX_SIZE];
+int front = -1, rear = -1;
+
+bool isEmpty() {
+    return front == -1 && rear == -1;
+}
+
+bool isFull() {
+    return rear == MAX_SIZE - 1;
+}
+
+void enqueue(int item) {
+    if (isFull()) {
+        printf("Queue is full\n");
+    } else {
+        if (isEmpty()) {
+            front = rear = 0;
+        } else {
+            rear++;
+        }
+        queue[rear] = item;
+        printf("Enqueued %d\n", item);
+    }
+}
+
+void dequeue() {
+    if (isEmpty()) {
+        printf("Queue is empty\n");
+    } else {
+        int item = queue[front];
+        if (front == rear) {
+            front = rear = -1;
+        } else {
+            front++;
+        }
+        printf("Dequeued %d\n", item);
+    }
+}
+
+void display() {
+    if (isEmpty()) {
+        printf("Queue is empty\n");
+    } else {
+        printf("Queue contents: ");
+        for (int i = front; i <= rear; i++) {
+            printf("%d ", queue[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    
+    display();
+    
+    dequeue();
+    
+    display();
+    
+    enqueue(40);
+    
+    display();
+    
+    return 0;
+}
