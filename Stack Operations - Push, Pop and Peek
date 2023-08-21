@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 100
+
+int stack[MAX_SIZE];
+int top = -1;
+
+// Function to push an element onto the stack
+void push(int item) {
+    if (top >= MAX_SIZE - 1) {
+        printf("Stack overflow\n");
+    } else {
+        stack[++top] = item;
+        printf("Pushed %d onto the stack\n", item);
+    }
+}
+
+// Function to pop an element from the stack
+int pop() {
+    if (top < 0) {
+        printf("Stack underflow\n");
+        return -1; // Return a sentinel value
+    } else {
+        int item = stack[top--];
+        printf("Popped %d from the stack\n", item);
+        return item;
+    }
+}
+
+// Function to peek at the top element of the stack
+int peek() {
+    if (top < 0) {
+        printf("Stack is empty\n");
+        return -1; // Return a sentinel value
+    } else {
+        printf("Top element is %d\n", stack[top]);
+        return stack[top];
+    }
+}
+
+int main() {
+    push(10);
+    push(20);
+    push(30);
+    
+    peek();
+    
+    pop();
+    pop();
+    
+    peek();
+    
+    return 0;
+}
